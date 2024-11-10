@@ -2,6 +2,6 @@
 {
     public class RabbitMqConfig
     {
-        public string ORDER_CREATED_QUEE = "order-ms-created"; 
+        public string ORDER_CREATED_QEUE = "order-ms-created"; 
     }
 }
