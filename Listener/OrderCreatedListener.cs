@@ -1,47 +1,53 @@
-﻿using RabbitMQ.Client;
+﻿using System.Text;
+using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Text;
+using order_ms.DTOs;
+using order_ms.Services;
+using order_ms.RabbitMq;
+using static MongoDB.Driver.WriteConcern;
 
 namespace order_ms.Listener
 {
     public class OrderCreatedListener
     {
-        private const string QueueName = "ORDER_CREATED_QEUE";
-        private readonly string _hostName = "localhost";
+        private readonly ILogger<OrderCreatedListener> _logger;
+        private readonly IServiceOrder _orderService;
+        private readonly IModel _channel;
+        private const string QueueName = RabbitMqConfig.ORDER_CREATED_QUEUE;
 
-        public async Task ListenAsync()
+        public OrderCreatedListener(ILogger<OrderCreatedListener> logger, IServiceOrder orderService, RabbitMqConfig rabbitMqConfig)
         {
-            var factory = new ConnectionFactory { HostName = "localhost" };
-            using var connection = await factory.CreateConnectionAsync();
-            using var channel = await connection.CreateChannelAsync();
+            _logger = logger;
+            _orderService = orderService;
 
-            await channel.QueueDeclareAsync(queue: "task_queue", durable: true, exclusive: false,
-                autoDelete: false, arguments: null);
+            var connection = rabbitMqConfig.CreateConnection();
+            _channel = rabbitMqConfig.CreateChannel(connection);
+        }
 
-            await channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
-
-            Console.WriteLine(" [*] Waiting for messages.");
-
-            var consumer = new AsyncEventingBasicConsumer(channel);
+        public void Listen()
+        {
+            var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += async (model, ea) =>
             {
-                byte[] body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($" [x] Received {message}");
+                var body = ea.Body.ToArray();
+                var messageJson = Encoding.UTF8.GetString(body);
 
-                int dots = message.Split('.').Length - 1;
-                await Task.Delay(dots * 1000);
+                var orderCreatedEvent = JsonSerializer.Deserialize<OrderCreatedEvent>(messageJson);
 
-                Console.WriteLine(" [x] Done");
+                if (orderCreatedEvent != null)
+                {
+                    _logger.LogInformation("Mensagem consumida: {Message}", messageJson);
 
-                // here channel could also be accessed as ((AsyncEventingBasicConsumer)sender).Channel
-                await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
+                    _orderService.Save(orderCreatedEvent);
+                }
+
+                _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
             };
 
-            await channel.BasicConsumeAsync("task_queue", autoAck: false, consumer: consumer);
-
-            Console.WriteLine(" Press [enter] to exit.");
-            Console.ReadLine();
+            _channel.BasicConsume(queue: QueueName, autoAck: false, consumer: consumer);
+            _logger.LogInformation("Esperando por mensagens...");
         }
     }
 }
