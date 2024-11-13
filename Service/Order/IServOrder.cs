@@ -5,5 +5,6 @@ namespace order_ms.Service
     public interface IServOrder
     {
         Order InsertOrder(Order order);
+        Order GetOrderById(int id);
     }
 }

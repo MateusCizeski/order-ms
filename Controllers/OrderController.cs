@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using order_ms.Application;
+using order_ms.DTOs;
 using order_ms.Models;
 
 namespace order_ms.Controllers
@@ -16,7 +17,7 @@ namespace order_ms.Controllers
         }
 
         [HttpPost]
-        [Route("order")]
+        [Route("CreateOrder")]
         public IActionResult InsertOrder(Order order)
         {
             try
@@ -26,6 +27,22 @@ namespace order_ms.Controllers
                 return Ok(result);
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("EditOrder")]
+        public IActionResult EditOrder(EditOrderDTO dto)
+        {
+            try
+            {
+                var result = _aplicOrder.EditOrder(dto);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

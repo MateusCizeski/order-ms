@@ -12,6 +12,13 @@ namespace order_ms.Service
             _repOrder = repOrder;
         }
 
+        public Order GetOrderById(int id)
+        {
+           var order = _repOrder.GetOrderById(id);
+
+            return order;
+        }
+
         public Order InsertOrder(Order order)
         {
             var result = _repOrder.InsertOrder(order);
