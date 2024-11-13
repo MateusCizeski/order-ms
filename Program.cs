@@ -26,6 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IRepOrder, RepOrder>();
 builder.Services.AddScoped<IServOrder, ServOrder>();
 builder.Services.AddScoped<IAplicOrder, AplicOrder>();
+builder.Services.AddScoped<IMapperOrder, MapperOrder>();
 
 //builder.Services.AddSingleton<MongoDbService>();
 

@@ -6,5 +6,6 @@ namespace order_ms.Service
     {
         Order InsertOrder(Order order);
         Order GetOrderById(int id);
+        Order EditOrder(Order order);
     }
 }

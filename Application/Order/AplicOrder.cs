@@ -21,6 +21,10 @@ namespace order_ms.Application
 
             _mapperOrder.MapperEditOrder(order, dto);
 
+            _servOrder.EditOrder(order);
+
+            return order;
+
         }
 
         public Order InsertOrder(Order order)

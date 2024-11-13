@@ -6,5 +6,6 @@ namespace order_ms.Repository
     {
         Order InsertOrder(Order order);
         Order GetOrderById(int Id);
+        Order EditOrder(Order order);
     }
 }

@@ -18,12 +18,12 @@ namespace order_ms.Repository
             return order;
         }
 
-        //public Order EditOrder(Order dto)
-        //{
-        //    var order = _mongoCollection.Find(p => p.Id == dto.Id).FirstOrDefault();
+        public Order EditOrder(Order order)
+        {
+            _mongoCollection.ReplaceOne(filter: p => p.Id == order.Id, replacement: order);
 
-          
-        //}
+            return order;
+        }
 
         public Order GetOrderById(int Id)
         {
