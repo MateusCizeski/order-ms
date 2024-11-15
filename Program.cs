@@ -10,9 +10,6 @@ var mongoConnectionString = builder.Configuration.GetConnectionString("DefaultCo
 var databaseName = "orderms";
 var collectionName = "Orders";
 
-//builder.Services.AddScoped<RepBase<Order>>(sp =>
-//    new RepBase<Order>(mongoConnectionString, databaseName, collectionName));
-
 var mongoClient = new MongoClient(mongoConnectionString);
 var mongoDatabase = mongoClient.GetDatabase(databaseName);
 var mongoCollection = mongoDatabase.GetCollection<Order>(collectionName);
@@ -28,13 +25,7 @@ builder.Services.AddScoped<IServOrder, ServOrder>();
 builder.Services.AddScoped<IAplicOrder, AplicOrder>();
 builder.Services.AddScoped<IMapperOrder, MapperOrder>();
 
-//builder.Services.AddSingleton<MongoDbService>();
-
 var app = builder.Build();
-
-//var mongoDbService = app.Services.GetRequiredService<MongoDbService>();
-
-//mongoDbService.CreateIndexOnCustomerId();
 
 if (app.Environment.IsDevelopment())
 {
