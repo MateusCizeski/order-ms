@@ -16,6 +16,7 @@ namespace order_ms.Controllers
             _aplicOrder = aplicOrder;
         }
 
+        #region CreateOrder
         [HttpPost]
         [Route("CreateOrder")]
         public IActionResult InsertOrder(Order order)
@@ -31,7 +32,9 @@ namespace order_ms.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
 
+        #region EditOrder
         [HttpPut]
         [Route("EditOrder")]
         public IActionResult EditOrder(EditOrderDTO dto)
@@ -47,5 +50,59 @@ namespace order_ms.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
+
+        #region GetOrderById
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetOrderById([FromRoute] int id)
+        {
+            try
+            {
+                var result = _aplicOrder.GetOrderById(id);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region ListOrders
+        [HttpGet]
+        public IActionResult ListOrders()
+        {
+            try
+            {
+                var result = _aplicOrder.ListOrders();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region DeleteOrder
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteOrder([FromRoute] int id)
+        {
+            try
+            {
+                _aplicOrder.DeleteOrder(id);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
     }
 }
