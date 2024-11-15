@@ -15,6 +15,7 @@ namespace order_ms.Application
             _mapperOrder = mapperOrder;
         }
 
+        #region EditOrder
         public Order EditOrder(EditOrderDTO dto)
         {
             var order = _servOrder.GetOrderById(dto.Id);
@@ -26,12 +27,40 @@ namespace order_ms.Application
             return order;
 
         }
+        #endregion
 
+        #region InsertOrder
         public Order InsertOrder(Order order)
         {
            var result = _servOrder.InsertOrder(order);
 
             return result;
         }
+        #endregion
+
+        #region GetOrderById
+        public Order GetOrderById(int id)
+        {
+            var order = _servOrder.GetOrderById(id);
+
+            return order;
+        }
+        #endregion
+
+        #region ListOrders
+        public List<Order> ListOrders()
+        {
+           var orders = _servOrder.ListOrders();
+
+            return orders;
+        }
+        #endregion
+
+        #region DeleteOrder
+        public void DeleteOrder(int id)
+        {
+            _servOrder.DeleteOrder(id);
+        }
+        #endregion
     }
 }
