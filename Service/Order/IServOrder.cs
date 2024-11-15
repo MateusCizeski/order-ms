@@ -7,5 +7,7 @@ namespace order_ms.Service
         Order InsertOrder(Order order);
         Order GetOrderById(int id);
         Order EditOrder(Order order);
+        List<Order> ListOrders();
+        void DeleteOrder(int id);
     }
 }
