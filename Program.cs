@@ -1,6 +1,8 @@
 using MongoDB.Driver;
 using order_ms.Application;
+using order_ms.Consumer;
 using order_ms.Models;
+using order_ms.Producer;
 using order_ms.Repository;
 using order_ms.Service;
 
@@ -19,6 +21,12 @@ builder.Services.AddSingleton(mongoCollection);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var consumer = new Consumer();
+await consumer.ConsumerMessageAsync();
+
+var producer = new Producer();
+await producer.ProduceMessageAsync();
 
 builder.Services.AddScoped<IRepOrder, RepOrder>();
 builder.Services.AddScoped<IServOrder, ServOrder>();
