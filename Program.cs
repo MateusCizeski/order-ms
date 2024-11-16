@@ -1,12 +1,14 @@
 using MongoDB.Driver;
 using order_ms.Application;
-using order_ms.Consumer;
 using order_ms.Models;
-using order_ms.Producer;
 using order_ms.Repository;
 using order_ms.Service;
+using Producer;
+using Consumer;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<RabbitProdu>();
 
 var mongoConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var databaseName = "orderms";
@@ -22,11 +24,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var consumer = new Consumer();
-await consumer.ConsumerMessageAsync();
-
-var producer = new Producer();
-await producer.ProduceMessageAsync();
+var producer = new RabbitProducer();
+producer.SendMessage("Hello from API!");
 
 builder.Services.AddScoped<IRepOrder, RepOrder>();
 builder.Services.AddScoped<IServOrder, ServOrder>();
@@ -34,6 +33,9 @@ builder.Services.AddScoped<IAplicOrder, AplicOrder>();
 builder.Services.AddScoped<IMapperOrder, MapperOrder>();
 
 var app = builder.Build();
+
+var rabbitConsumer = app.Services.GetRequiredService<RabbitConsumer>();
+_ = Task.Run(() => rabbitConsumer.ConsumerMessageAsync());
 
 if (app.Environment.IsDevelopment())
 {
