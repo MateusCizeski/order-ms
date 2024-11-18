@@ -30,7 +30,6 @@ namespace Consumer
 
             await channel.BasicConsumeAsync(queue: _queueName, autoAck: true, consumer: consumer);
 
-            // Mantém a tarefa rodando até a aplicação ser encerrada.
             await Task.Delay(Timeout.Infinite);
         }
     }

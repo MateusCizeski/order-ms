@@ -8,7 +8,8 @@ using Consumer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<RabbitProdu>();
+builder.Services.AddSingleton<RabbitProducer>();
+builder.Services.AddSingleton<RabbitConsumer>();
 
 var mongoConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var databaseName = "orderms";
@@ -25,7 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var producer = new RabbitProducer();
-producer.SendMessage("Hello from API!");
+producer.SendMessage("Teste de mensagem para o RabbitMQ!");
 
 builder.Services.AddScoped<IRepOrder, RepOrder>();
 builder.Services.AddScoped<IServOrder, ServOrder>();

@@ -2,6 +2,7 @@
 using order_ms.Application;
 using order_ms.DTOs;
 using order_ms.Models;
+using Producer;
 
 namespace order_ms.Controllers
 {
@@ -10,11 +11,30 @@ namespace order_ms.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IAplicOrder _aplicOrder;
+        private readonly RabbitProducer _rabbitProducer;
 
-        public OrderController(IAplicOrder aplicOrder)
+        public OrderController(IAplicOrder aplicOrder, RabbitProducer rabbitProducer)
         {
             _aplicOrder = aplicOrder;
+            _rabbitProducer = rabbitProducer;
         }
+
+        #region SendMessage
+        [HttpPost]
+        [Route("SendMessage")]
+        public IActionResult SendMessage([FromBody] string message)
+        {
+            try
+            {
+                _rabbitProducer.SendMessage(message);
+                return Ok("Mensagem enviada com sucesso.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao enviar mensagem: {ex.Message}");
+            }
+        }
+        #endregion
 
         #region CreateOrder
         [HttpPost]
