@@ -1,7 +1,7 @@
-﻿using domain;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
+using order_ms.Models;
 
-namespace repository
+namespace order_ms.Repository
 {
     public class RepOrder : IRepOrder
     {

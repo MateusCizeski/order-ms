@@ -1,6 +1,6 @@
-﻿using domain;
+﻿using order_ms.Models;
 
-namespace repository
+namespace order_ms.Repository
 {
     public interface IRepOrder
     {
