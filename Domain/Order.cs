@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace order_ms.Models
+namespace domain
 {
     public class Order
     {

@@ -1,10 +1,12 @@
-﻿using order_ms.DTOs;
-using order_ms.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace order_ms.Application
+namespace Application.Order.Mapper
 {
-    public interface IMapperOrder
+    internal class IMapperOrder
     {
-        void MapperEditOrder(Order order, EditOrderDTO dto);
     }
 }

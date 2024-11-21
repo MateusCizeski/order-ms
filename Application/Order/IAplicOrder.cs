@@ -1,14 +1,12 @@
-﻿using order_ms.DTOs;
-using order_ms.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace order_ms.Application
+namespace Application.Order
 {
-    public interface IAplicOrder
+    internal class IAplicOrder
     {
-        Order InsertOrder(Order order);
-        Order EditOrder(EditOrderDTO dto);
-        Order GetOrderById(int id);
-        List<Order> ListOrders();
-        void DeleteOrder(int id);
     }
 }

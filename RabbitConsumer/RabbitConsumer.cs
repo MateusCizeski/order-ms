@@ -1,4 +1,6 @@
-﻿using RabbitMQ.Client;
+﻿using domain;
+using MongoDB.Driver;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
@@ -8,6 +10,8 @@ namespace Consumer
     {
         private readonly string _hostName = "localhost";
         private readonly string _queueName = "hello";
+        private readonly IMongoCollection<Order> _mongoCollection;
+        //private readonly IRepOrder _repOrder;
 
         public async Task ConsumerMessageAsync()
         {

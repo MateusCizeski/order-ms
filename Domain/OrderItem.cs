@@ -1,4 +1,4 @@
-﻿namespace order_ms.Models
+﻿namespace domain
 {
     public class OrderItem
     {
