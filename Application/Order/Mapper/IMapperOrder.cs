@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using domain;
 
-namespace Application.Order.Mapper
+namespace Application
 {
-    internal class IMapperOrder
+    public interface IMapperOrder
     {
+        void MapperEditOrder(Order order, EditOrderDTO dto);
     }
 }

@@ -5,12 +5,14 @@ namespace services
 {
     public class ServOrder : IServOrder
     {
+        #region Ctor
         private readonly IRepOrder _repOrder;
 
         public ServOrder(IRepOrder repOrder)
         {
             _repOrder = repOrder;
         }
+        #endregion
 
         #region EditOrder
         public Order EditOrder(Order order)

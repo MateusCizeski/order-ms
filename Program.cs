@@ -1,10 +1,7 @@
-using MongoDB.Driver;
-using order_ms.Application;
-using order_ms.Models;
-using order_ms.Repository;
-using order_ms.Service;
-using Producer;
 using Consumer;
+using domain;
+using MongoDB.Driver;
+using Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +24,6 @@ builder.Services.AddSwaggerGen();
 
 var producer = new RabbitProducer();
 producer.SendMessage("Teste de mensagem para o RabbitMQ!");
-
-builder.Services.AddScoped<IRepOrder, RepOrder>();
-builder.Services.AddScoped<IServOrder, ServOrder>();
-builder.Services.AddScoped<IAplicOrder, AplicOrder>();
-builder.Services.AddScoped<IMapperOrder, MapperOrder>();
 
 var app = builder.Build();
 

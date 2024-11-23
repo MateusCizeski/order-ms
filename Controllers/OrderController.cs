@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using order_ms.Application;
-using order_ms.DTOs;
-using order_ms.Models;
+﻿using Application;
+using domain;
+using Microsoft.AspNetCore.Mvc;
 using Producer;
 
 namespace order_ms.Controllers

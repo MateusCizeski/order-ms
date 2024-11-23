@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using domain;
 
-namespace Application.Order
+namespace Application
 {
-    internal class IAplicOrder
+    public interface IAplicOrder
     {
+        Order InsertOrder(Order order);
+        Order EditOrder(EditOrderDTO dto);
+        Order GetOrderById(int id);
+        List<Order> ListOrders();
+        void DeleteOrder(int id);
     }
 }

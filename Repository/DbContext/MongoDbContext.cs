@@ -1,7 +1,7 @@
-﻿using MongoDB.Driver;
-using order_ms.Models;
+﻿using domain;
+using MongoDB.Driver;
 
-namespace order_ms.Context
+namespace repository
 {
     public class MongoDbContext
     {

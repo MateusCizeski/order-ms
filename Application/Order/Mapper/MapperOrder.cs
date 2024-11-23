@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using domain;
 
-namespace Application.Order.Mapper
+namespace Application
 {
-    internal class MapperOrder
+    public class MapperOrder : IMapperOrder
     {
+        public void MapperEditOrder(Order order, EditOrderDTO dto)
+        {
+            order.CustumerId = dto.CustumerId;
+            order.Total = dto.Total;
+        }
     }
 }
