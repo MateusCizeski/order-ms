@@ -1,7 +1,9 @@
 ﻿using domain;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using repository;
 using System.Text;
 
 namespace Consumer
@@ -11,7 +13,15 @@ namespace Consumer
         private readonly string _hostName = "localhost";
         private readonly string _queueName = "hello";
         private readonly IMongoCollection<Order> _mongoCollection;
-        //private readonly IRepOrder _repOrder;
+        private readonly ILogger<RabbitConsumer> _logger;
+        private readonly IRepOrder _repOrder;
+
+        public RabbitConsumer(ILogger<RabbitConsumer> logger, IMongoCollection<Order> mongoCollection,IRepOrder repOrder)
+        {
+          _logger = logger;
+          _mongoCollection = mongoCollection;
+          _repOrder = repOrder;
+        }
 
         public async Task ConsumerMessageAsync()
         {
