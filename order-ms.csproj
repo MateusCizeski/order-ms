@@ -19,4 +19,12 @@
 	<!--<ProjectReference Include="./RabbitProducer/RabbitProducer.csproj" />-->
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="Domain\Domain.csproj">
+      <Private>False</Private>
+      <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
 </Project>

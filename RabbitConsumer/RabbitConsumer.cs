@@ -1,27 +1,25 @@
 ﻿using domain;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using repository;
 using System.Text;
+using System.Text.Json;
 
 namespace Consumer
 {
     public class RabbitConsumer
     {
         private readonly string _hostName = "localhost";
-        private readonly string _queueName = "hello";
-        //private readonly IMongoCollection<Order> _mongoCollection;
-        //private readonly ILogger<RabbitConsumer> _logger;
-        //private readonly IRepOrder _repOrder;
+        private readonly string _queueName = "orders";
+        private readonly IMongoCollection<Order> _mongoCollection;
+        private readonly IRepOrder _repOrder;
 
-        //public RabbitConsumer(ILogger<RabbitConsumer> logger, IMongoCollection<Order> mongoCollection,IRepOrder repOrder)
-        //{
-        //  _logger = logger;
-        //  _mongoCollection = mongoCollection;
-        //  _repOrder = repOrder;
-        //}
+        public RabbitConsumer(IMongoCollection<Order> mongoCollection, IRepOrder repOrder)
+        {
+            _mongoCollection = mongoCollection;
+            _repOrder = repOrder;
+        }
 
         public async Task ConsumerMessageAsync()
         {
@@ -39,6 +37,27 @@ namespace Consumer
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine($" [x] Received: {message}");
+
+                try
+                {
+                    var order = JsonSerializer.Deserialize<Order>(message);
+
+                    if(order != null)
+                    {
+                        Console.WriteLine($"Processing Order {order.Id} for Customer {order.CustomerId}");
+
+                        _repOrder.InsertOrder(order);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid order format received.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing message: {ex.Message}");
+                }
+
                 await Task.CompletedTask;
             };
 

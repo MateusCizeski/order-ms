@@ -8,7 +8,7 @@ namespace Producer
         private readonly string _hostName;
         private readonly string _queueName;
 
-        public RabbitProducer(string hostName = "localhost", string queueName = "hello")
+        public RabbitProducer(string hostName = "localhost", string queueName = "orders")
         {
             _hostName = hostName;
             _queueName = queueName;
