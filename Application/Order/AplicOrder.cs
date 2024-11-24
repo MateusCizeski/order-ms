@@ -5,6 +5,7 @@ namespace Application
 {
     public class AplicOrder : IAplicOrder
     {
+        #region Ctor
         private readonly IServOrder _servOrder;
         private readonly IMapperOrder _mapperOrder;
 
@@ -13,6 +14,7 @@ namespace Application
             _servOrder = servOrder;
             _mapperOrder = mapperOrder;
         }
+        #endregion
 
         #region EditOrder
         public Order EditOrder(EditOrderDTO dto)
@@ -59,6 +61,33 @@ namespace Application
         public void DeleteOrder(int id)
         {
             _servOrder.DeleteOrder(id);
+        }
+        #endregion
+
+        #region GetOrderByCustomerId
+        public List<Order> GetOrderByCustomerId(int customerId)
+        {
+            var orders = _servOrder.GetOrderByCustomerId(customerId);
+
+            return orders;
+        }
+        #endregion
+
+        #region GetPriceTotalOrder
+        public PriceTotalOrderDTO GetPriceTotalOrder(int Id)
+        {
+            var dto = _servOrder.GetPriceTotalOrder(Id);
+
+            return dto;
+        }
+        #endregion
+
+        #region OrderByCustomer
+        public OrderByCustomerDTO OrderByCustomer(int customerId)
+        {
+            var dto = _servOrder.OrderByCustomer(customerId);
+
+            return dto;
         }
         #endregion
     }
