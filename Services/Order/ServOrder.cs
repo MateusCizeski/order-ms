@@ -1,4 +1,5 @@
 ﻿using domain;
+using MongoDB.Driver;
 using repository;
 
 namespace services
@@ -54,6 +55,33 @@ namespace services
             var orders = _repOrder.ListOrders();
 
             return orders;
+        }
+        #endregion
+
+        #region GetOrderByCustomerId
+        public List<Order> GetOrderByCustomerId(int customerId)
+        {
+            var orders = _repOrder.GetOrderByCustomerId(customerId);
+
+            return orders;
+        }
+        #endregion
+
+        #region GetPriceTotalOrder
+        public PriceTotalOrderDTO GetPriceTotalOrder(int Id)
+        {
+            var dto = _repOrder.GetPriceTotalOrder(Id);
+
+            return dto;
+        }
+        #endregion
+
+        #region OrderByCustomer
+        public OrderByCustomerDTO OrderByCustomer(int customerId)
+        {
+            var dto = _repOrder.OrderByCustomer(customerId);
+
+            return dto;
         }
         #endregion
     }
