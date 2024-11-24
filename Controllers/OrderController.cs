@@ -9,6 +9,7 @@ namespace order_ms.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
+        #region Ctor
         private readonly IAplicOrder _aplicOrder;
         private readonly RabbitProducer _rabbitProducer;
 
@@ -17,6 +18,7 @@ namespace order_ms.Controllers
             _aplicOrder = aplicOrder;
             _rabbitProducer = rabbitProducer;
         }
+        #endregion
 
         #region SendMessage
         [HttpPost]
@@ -116,6 +118,57 @@ namespace order_ms.Controllers
                 _aplicOrder.DeleteOrder(id);
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region GetOrderByCustomerId
+        [Route("{customerId}")]
+        public IActionResult GetOrderByCustomerId([FromRoute] int customerId)
+        {
+            try
+            {
+                var result = _aplicOrder.GetOrderByCustomerId(customerId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region GetPriceTotalOrder
+        [Route("GetPriceTotalOrder/{id}")]
+        public IActionResult GetPriceTotalOrder(int id)
+        {
+            try
+            {
+                var result = _aplicOrder.GetPriceTotalOrder(id);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
+
+        #region OrderByCustomer
+        [Route("OrderByCustomer/{customerId}")]
+        public IActionResult OrderByCustomer(int customerId)
+        {
+            try
+            {
+                var result = _aplicOrder.OrderByCustomer(customerId);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

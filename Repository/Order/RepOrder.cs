@@ -117,7 +117,6 @@ namespace repository
                 Id = orders.Select(order => order.Id).ToList(),
                 QtdeOrders = orders.Count()
             };
-
         }
         #endregion
     }
