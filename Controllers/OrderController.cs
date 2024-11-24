@@ -39,7 +39,7 @@ namespace order_ms.Controllers
 
         #region CreateOrder
         [HttpPost]
-        [Route("CreateOrder")]
+        [Route("createOrder")]
         public IActionResult InsertOrder(Order order)
         {
             try
@@ -57,7 +57,7 @@ namespace order_ms.Controllers
 
         #region EditOrder
         [HttpPut]
-        [Route("EditOrder")]
+        [Route("editOrder")]
         public IActionResult EditOrder(EditOrderDTO dto)
         {
             try
@@ -75,7 +75,7 @@ namespace order_ms.Controllers
 
         #region GetOrderById
         [HttpGet]
-        [Route("{id}")]
+        [Route("getOrderById/{id}")]
         public IActionResult GetOrderById([FromRoute] int id)
         {
             try
@@ -110,7 +110,7 @@ namespace order_ms.Controllers
 
         #region DeleteOrder
         [HttpDelete]
-        [Route("{id}")]
+        [Route("deleteOrder/{id}")]
         public IActionResult DeleteOrder([FromRoute] int id)
         {
             try
@@ -127,7 +127,8 @@ namespace order_ms.Controllers
         #endregion
 
         #region GetOrderByCustomerId
-        [Route("{customerId}")]
+        [HttpGet]
+        [Route("getOrderByCustomerId/{customerId}")]
         public IActionResult GetOrderByCustomerId([FromRoute] int customerId)
         {
             try
@@ -144,7 +145,8 @@ namespace order_ms.Controllers
         #endregion
 
         #region GetPriceTotalOrder
-        [Route("GetPriceTotalOrder/{id}")]
+        [HttpGet]
+        [Route("getPriceTotalOrder/{id}")]
         public IActionResult GetPriceTotalOrder(int id)
         {
             try
@@ -161,7 +163,8 @@ namespace order_ms.Controllers
         #endregion
 
         #region OrderByCustomer
-        [Route("OrderByCustomer/{customerId}")]
+        [HttpGet]
+        [Route("orderByCustomer/{customerId}")]
         public IActionResult OrderByCustomer(int customerId)
         {
             try
